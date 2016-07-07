@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 //------------------------------
 #include "..\Public\SocketWinAPI.h"
 //------------------------------
@@ -8,7 +8,7 @@ class SOCKETDLL ClientWinAPI :
 protected:
 	SOCKET ConnectSocket;
 protected:
-	//Получить сокет для соединения
+	//РџРѕР»СѓС‡РёС‚СЊ СЃРѕРєРµС‚ РґР»СЏ СЃРѕРµРґРёРЅРµРЅРёСЏ
 	void GetConnectSocket(PCSTR Port);
 public:
 	virtual int GetState();

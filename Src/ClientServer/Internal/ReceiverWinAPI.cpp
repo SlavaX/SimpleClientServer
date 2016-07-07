@@ -1,4 +1,4 @@
-//------------------------------
+п»ї//------------------------------
 #include "..\Public\ReceiverWinAPI.h"
 //------------------------------
 #include <iostream>
@@ -11,8 +11,8 @@ ReceiverWinAPI::ReceiverWinAPI()
 
 void ReceiverWinAPI::Receive(char *buf, int len)
 {
-	//Функция ничего не делает просто выводит принятые сообщения на консоль
-	//char *buf, int len не используются
+	//Р¤СѓРЅРєС†РёСЏ РЅРёС‡РµРіРѕ РЅРµ РґРµР»Р°РµС‚ РїСЂРѕСЃС‚Рѕ РІС‹РІРѕРґРёС‚ РїСЂРёРЅСЏС‚С‹Рµ СЃРѕРѕР±С‰РµРЅРёСЏ РЅР° РєРѕРЅСЃРѕР»СЊ
+	//char *buf, int len РЅРµ РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ
 	int recvResult = 0;
 	std::string tmp;
 	do {
@@ -21,7 +21,7 @@ void ReceiverWinAPI::Receive(char *buf, int len)
 		recvResult = recv(ConnectSocket, bufLocal, lenLocal, 0);
 		if (recvResult > 0)
 		{
-			//Сообщение это то, что заканчивается '\0'
+			//РЎРѕРѕР±С‰РµРЅРёРµ СЌС‚Рѕ С‚Рѕ, С‡С‚Рѕ Р·Р°РєР°РЅС‡РёРІР°РµС‚СЃСЏ '\0'
 			std::vector<std::string> BufVect;
 			for (auto &ch : bufLocal)
 			{
@@ -39,22 +39,22 @@ void ReceiverWinAPI::Receive(char *buf, int len)
 				}
 			}
 #ifdef _DEBUG
-			std::wcout << L"Принято байт: " << recvResult << "\n";
+			std::wcout << L"РџСЂРёРЅСЏС‚Рѕ Р±Р°Р№С‚: " << recvResult << "\n";
 #endif
 			for (auto &str : BufVect)
 				std::wcout << str.c_str() << "\n";
 		}
 		else if (recvResult == 0)
 		{
-			if (tmp.size())//вывести остаток
+			if (tmp.size())//РІС‹РІРµСЃС‚Рё РѕСЃС‚Р°С‚РѕРє
 			{
 				std::wcout << tmp.c_str() << "\n";
 				tmp.clear();
 			}
-			std::wcout << L"Соединение прервано\n";
+			std::wcout << L"РЎРѕРµРґРёРЅРµРЅРёРµ РїСЂРµСЂРІР°РЅРѕ\n";
 		}
 		else
-			std::wcout << L"Функция recv выполнилась с ошибкой: " << WSAGetLastError() << "\n";
+			std::wcout << L"Р¤СѓРЅРєС†РёСЏ recv РІС‹РїРѕР»РЅРёР»Р°СЃСЊ СЃ РѕС€РёР±РєРѕР№: " << WSAGetLastError() << "\n";
 
 	} while (recvResult > 0);
 }

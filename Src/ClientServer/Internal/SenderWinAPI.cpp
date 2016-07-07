@@ -1,4 +1,4 @@
-#include "..\Public\SenderWinAPI.h"
+п»ї#include "..\Public\SenderWinAPI.h"
 //------------------------------
 #include <iostream>
 //------------------------------
@@ -9,9 +9,9 @@ SenderWinAPI::SenderWinAPI()
 
 void SenderWinAPI::Send(const char *buf, int len)
 {
-	//Отправка содержимого буфера серверу
+	//РћС‚РїСЂР°РІРєР° СЃРѕРґРµСЂР¶РёРјРѕРіРѕ Р±СѓС„РµСЂР° СЃРµСЂРІРµСЂСѓ
 	if (send(ConnectSocket, buf, len, 0) == SOCKET_ERROR)
-		std::wcout << L"Отправка не удалась. Код ошибки: " << WSAGetLastError() << "\n";
+		std::wcout << L"РћС‚РїСЂР°РІРєР° РЅРµ СѓРґР°Р»Р°СЃСЊ. РљРѕРґ РѕС€РёР±РєРё: " << WSAGetLastError() << "\n";
 }
 
 SenderWinAPI::~SenderWinAPI()

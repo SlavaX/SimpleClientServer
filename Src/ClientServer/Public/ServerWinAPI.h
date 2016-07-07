@@ -1,4 +1,4 @@
-//------------------------------
+п»ї//------------------------------
 #pragma once
 //------------------------------
 #include <deque>
@@ -17,24 +17,24 @@ class SOCKETDLL ServerWinAPI :
 friend class ReceiveTransferTask;
 friend class SendTransferTask;
 private:
-	//Сокет для прослушки передатчиков
+	//РЎРѕРєРµС‚ РґР»СЏ РїСЂРѕСЃР»СѓС€РєРё РїРµСЂРµРґР°С‚С‡РёРєРѕРІ
 	SOCKET ReceiversListenSocket;
-	//Сокет для прослушки приемников
+	//РЎРѕРєРµС‚ РґР»СЏ РїСЂРѕСЃР»СѓС€РєРё РїСЂРёРµРјРЅРёРєРѕРІ
 	SOCKET SendersListenSocket;
-	//Очередь сокетов для передатчиков
+	//РћС‡РµСЂРµРґСЊ СЃРѕРєРµС‚РѕРІ РґР»СЏ РїРµСЂРµРґР°С‚С‡РёРєРѕРІ
 	std::deque<SOCKET> SendersQueue;
 	std::condition_variable SendersCondition;
-	//Очередь сокетов для передатчиков
+	//РћС‡РµСЂРµРґСЊ СЃРѕРєРµС‚РѕРІ РґР»СЏ РїРµСЂРµРґР°С‚С‡РёРєРѕРІ
 	std::deque<SOCKET> ReceiversQueue;
 	std::condition_variable ReceiversCondition;
 	std::mutex Queue_mutex;
-	//Очередь для сообщений
+	//РћС‡РµСЂРµРґСЊ РґР»СЏ СЃРѕРѕР±С‰РµРЅРёР№
 	std::deque<std::string> Messages;
 	std::condition_variable MessagesCondition;
 	std::mutex Messages_mutex;
 
 private:
-	//Получить сокет для прослушивания
+	//РџРѕР»СѓС‡РёС‚СЊ СЃРѕРєРµС‚ РґР»СЏ РїСЂРѕСЃР»СѓС€РёРІР°РЅРёСЏ
 	SOCKET GetListenSocket(PCSTR Port);
 	void Accept(SOCKET &ConnectSocket);
 	void SendersTransfer();

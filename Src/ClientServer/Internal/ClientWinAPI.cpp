@@ -1,4 +1,4 @@
-//------------------------------
+ï»¿//------------------------------
 #include "..\Public\ClientWinAPI.h"
 //------------------------------
 #include <iostream>
@@ -12,18 +12,18 @@ ClientWinAPI::ClientWinAPI() :
 void ClientWinAPI::GetConnectSocket(PCSTR Port)
 {
 	addrinfo *addrInfoList = 0;
-	//Ïîëó÷èòü ñïèñîê âîçìîæíûõ ñîåäèíåíèé
+	//ÐŸÐ¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ ÑÐ¿Ð¸ÑÐ¾Ðº Ð²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ñ‹Ñ… ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ð¹
 	this->AddrInfoForPort(Port, &addrInfoList);
-	//Â ñîîòâåòñòâèè ñ ïîëó÷åííûì ñïèñêîì ïðîáóåì ñîåäèíèòüÿ ê ñåðâåðó
-	//äî ïåðâîãî óñïåøíîãî
+	//Ð’ ÑÐ¾Ð¾Ñ‚Ð²ÐµÑ‚ÑÑ‚Ð²Ð¸Ð¸ Ñ Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð½Ñ‹Ð¼ ÑÐ¿Ð¸ÑÐºÐ¾Ð¼ Ð¿Ñ€Ð¾Ð±ÑƒÐµÐ¼ ÑÐ¾ÐµÐ´Ð¸Ð½Ð¸Ñ‚ÑŒÑ Ðº ÑÐµÑ€Ð²ÐµÑ€Ñƒ
+	//Ð´Ð¾ Ð¿ÐµÑ€Ð²Ð¾Ð³Ð¾ ÑƒÑÐ¿ÐµÑˆÐ½Ð¾Ð³Ð¾
 	for (addrinfo* ptr = addrInfoList; ptr != NULL; ptr = ptr->ai_next)
 	{
-		//Ñîçäàòü ñîêåò äëÿ ñîåäèíåíèÿ ñ ñåðâåðîì
+		//Ð¡Ð¾Ð·Ð´Ð°Ñ‚ÑŒ ÑÐ¾ÐºÐµÑ‚ Ð´Ð»Ñ ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ Ñ ÑÐµÑ€Ð²ÐµÑ€Ð¾Ð¼
 		ConnectSocket = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
 		if (ConnectSocket == INVALID_SOCKET)
 			std::wcout << L"socket failed with error: " << WSAGetLastError() << "\n";
 
-		//Ñîåäèíèòüñÿ ê ñåðâåðó
+		//Ð¡Ð¾ÐµÐ´Ð¸Ð½Ð¸Ñ‚ÑŒÑÑ Ðº ÑÐµÑ€Ð²ÐµÑ€Ñƒ
 		int connectResult = connect(ConnectSocket, ptr->ai_addr, static_cast<int>(ptr->ai_addrlen));
 		if (connectResult == SOCKET_ERROR)
 		{
@@ -37,7 +37,7 @@ void ClientWinAPI::GetConnectSocket(PCSTR Port)
 	freeaddrinfo(addrInfoList);
 
 	if (ConnectSocket == INVALID_SOCKET)
-		std::wcout << L"Ñîåäèíèòüñÿ ñ ñåðâåðîì íå óäàëîñü!\n";
+		std::wcout << L"Ð¡Ð¾ÐµÐ´Ð¸Ð½Ð¸Ñ‚ÑŒÑÑ Ñ ÑÐµÑ€Ð²ÐµÑ€Ð¾Ð¼ Ð½Ðµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ!\n";
 }
 
 int ClientWinAPI::GetState()
@@ -47,9 +47,9 @@ int ClientWinAPI::GetState()
 
 ClientWinAPI::~ClientWinAPI()
 {
-	//Çàêðûòèå ñîåäèíåíèÿ ñ ñåðâåðîì
+	//Ð—Ð°ÐºÑ€Ñ‹Ñ‚Ð¸Ðµ ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ Ñ ÑÐµÑ€Ð²ÐµÑ€Ð¾Ð¼
 	if (shutdown(ConnectSocket, SD_SEND) == SOCKET_ERROR)
-		std::wcout << L"Çàêðûòèå ñîåäèíåíèÿ íå óäàëîñü. Êîä îøèáêè: " << WSAGetLastError() << "\n";
+		std::wcout << L"Ð—Ð°ÐºÑ€Ñ‹Ñ‚Ð¸Ðµ ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ Ð½Ðµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ. ÐšÐ¾Ð´ Ð¾ÑˆÐ¸Ð±ÐºÐ¸: " << WSAGetLastError() << "\n";
 
 	closesocket(ConnectSocket);
 }

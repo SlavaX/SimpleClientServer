@@ -1,4 +1,4 @@
-//------------------------------
+﻿//------------------------------
 #include "..\..\ClientServer\Public\ServerWinAPI.h"
 //------------------------------
 #pragma comment (lib, "..\\..\\Debug\\ClientServer.lib")

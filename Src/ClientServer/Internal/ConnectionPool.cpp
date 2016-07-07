@@ -1,4 +1,4 @@
-//------------------------------
+п»ї//------------------------------
 #include "ConnectionPool.h"
 //------------------------------
 #include "SocketTask.h"
@@ -6,7 +6,7 @@
 ConnectionPool::ConnectionPool(size_t HandlersQuantity) :
 	Stop(false)
 {
-	//Здесь мы создаем весь пул потоков
+	//Р—РґРµСЃСЊ РјС‹ СЃРѕР·РґР°РµРј РІРµСЃСЊ РїСѓР» РїРѕС‚РѕРєРѕРІ
 	for (size_t i = 0; i<HandlersQuantity; ++i)
 		Handlers.push_back(std::thread(SocketTask(*this))); 
 }
@@ -15,19 +15,19 @@ void ConnectionPool::AddTask(std::function<void()> f)
 {
 	{
 		std::unique_lock<std::mutex> lock(Queue_mut);
-		//Добавляем задачу
+		//Р”РѕР±Р°РІР»СЏРµРј Р·Р°РґР°С‡Сѓ
 		Connections.push_back(std::function<void()>(f));
 	} 
-	//Здесь мы оповещаем один из спящих потоков
+	//Р—РґРµСЃСЊ РјС‹ РѕРїРѕРІРµС‰Р°РµРј РѕРґРёРЅ РёР· СЃРїСЏС‰РёС… РїРѕС‚РѕРєРѕРІ
 	Condition.notify_one();
 }
 
 ConnectionPool::~ConnectionPool()
 {
-	//остановить потоки
+	//РѕСЃС‚Р°РЅРѕРІРёС‚СЊ РїРѕС‚РѕРєРё
 	this->Stop = true;
 	Condition.notify_all();
-	//вернуть их к главному потоку
+	//РІРµСЂРЅСѓС‚СЊ РёС… Рє РіР»Р°РІРЅРѕРјСѓ РїРѕС‚РѕРєСѓ
 	for (auto it = this->Handlers.begin(); it != this->Handlers.end(); ++it)
 		it->join();
 }

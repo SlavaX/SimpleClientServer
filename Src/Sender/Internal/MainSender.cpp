@@ -1,4 +1,4 @@
-//------------------------------
+п»ї//------------------------------
 #include <fstream>
 #include <iostream>
 //------------------------------
@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 	SenderWinAPI Sender;
 	if (Sender.GetState())
 	{
-		char buf[] = "Что-то на русском\0I am a sender\0Hello\0";
+		char buf[] = "Р§С‚Рѕ-С‚Рѕ РЅР° СЂСѓСЃСЃРєРѕРј\0I am a sender\0Hello\0";
 		Sender.Send(buf, sizeof(buf));
 
 		std::string AppName = argv[0];

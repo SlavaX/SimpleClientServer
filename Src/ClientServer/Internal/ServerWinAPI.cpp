@@ -1,4 +1,4 @@
-//------------------------------
+п»ї//------------------------------
 #include "..\Public\ServerWinAPI.h"
 //------------------------------
 #include <iostream>
@@ -11,7 +11,7 @@ ServerWinAPI::ServerWinAPI() :
 ReceiversListenSocket(INVALID_SOCKET),
 SendersListenSocket(INVALID_SOCKET)
 {
-	//Здесь необходимо создать сокеты для прослушивания передатчиков и приемников
+	//Р—РґРµСЃСЊ РЅРµРѕР±С…РѕРґРёРјРѕ СЃРѕР·РґР°С‚СЊ СЃРѕРєРµС‚С‹ РґР»СЏ РїСЂРѕСЃР»СѓС€РёРІР°РЅРёСЏ РїРµСЂРµРґР°С‚С‡РёРєРѕРІ Рё РїСЂРёРµРјРЅРёРєРѕРІ
 	ReceiversListenSocket = this->GetListenSocket(RECEIVER_PORT);
 	SendersListenSocket = this->GetListenSocket(SENDER_PORT);
 }
@@ -19,27 +19,27 @@ SendersListenSocket(INVALID_SOCKET)
 SOCKET ServerWinAPI::GetListenSocket(PCSTR Port)
 {
 	addrinfo *addrInfoList = 0;
-	//Получить список адресов для соединения
+	//РџРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє Р°РґСЂРµСЃРѕРІ РґР»СЏ СЃРѕРµРґРёРЅРµРЅРёСЏ
 	this->AddrInfoForPort(Port, &addrInfoList);
 
-	//Создать сокет для прослушивания
+	//РЎРѕР·РґР°С‚СЊ СЃРѕРєРµС‚ РґР»СЏ РїСЂРѕСЃР»СѓС€РёРІР°РЅРёСЏ
 	SOCKET ListenSocket = socket(addrInfoList->ai_family, addrInfoList->ai_socktype, addrInfoList->ai_protocol);
 	if (ListenSocket == INVALID_SOCKET)
 	{
-		std::wcout << L"Сокет не создан. Код ошибки: " << WSAGetLastError() << "\n";
+		std::wcout << L"РЎРѕРєРµС‚ РЅРµ СЃРѕР·РґР°РЅ. РљРѕРґ РѕС€РёР±РєРё: " << WSAGetLastError() << "\n";
 	}
 	else
 	{
-		//Связать с адресом сокет для прослушивания
+		//РЎРІСЏР·Р°С‚СЊ СЃ Р°РґСЂРµСЃРѕРј СЃРѕРєРµС‚ РґР»СЏ РїСЂРѕСЃР»СѓС€РёРІР°РЅРёСЏ
 		if (bind(ListenSocket, addrInfoList->ai_addr, static_cast<int>(addrInfoList->ai_addrlen)) == SOCKET_ERROR)
 		{
-			std::wcout << L"Связь сокета с адресом не удалось. Код ошибки: " << WSAGetLastError() << "\n";
+			std::wcout << L"РЎРІСЏР·СЊ СЃРѕРєРµС‚Р° СЃ Р°РґСЂРµСЃРѕРј РЅРµ СѓРґР°Р»РѕСЃСЊ. РљРѕРґ РѕС€РёР±РєРё: " << WSAGetLastError() << "\n";
 		}
 		else
 		{
-			//Начать прослушивание порта
+			//РќР°С‡Р°С‚СЊ РїСЂРѕСЃР»СѓС€РёРІР°РЅРёРµ РїРѕСЂС‚Р°
 			if (listen(ListenSocket, SOMAXCONN) == SOCKET_ERROR)
-				std::wcout << L"Прослушивание не удалось. Код ошибки: " << WSAGetLastError() << "\n";
+				std::wcout << L"РџСЂРѕСЃР»СѓС€РёРІР°РЅРёРµ РЅРµ СѓРґР°Р»РѕСЃСЊ. РљРѕРґ РѕС€РёР±РєРё: " << WSAGetLastError() << "\n";
 		}
 
 	}
@@ -62,7 +62,7 @@ void ServerWinAPI::Accept(SOCKET &ListenSocket)
 		ConnectSocket = accept(ListenSocket, NULL, NULL);
 		if (ConnectSocket == INVALID_SOCKET)
 		{
-			std::wcout << L"Прием не состоялся. Код ошибки: " << WSAGetLastError() << "\n";
+			std::wcout << L"РџСЂРёРµРј РЅРµ СЃРѕСЃС‚РѕСЏР»СЃСЏ. РљРѕРґ РѕС€РёР±РєРё: " << WSAGetLastError() << "\n";
 		}
 		else
 		{
@@ -91,15 +91,15 @@ public:
 	void operator()()
 	{
 		int recvResult = 0;
-		std::string tmp;//будем использовать при парсинге входного буфера (конец буфера не означает конец строки)
+		std::string tmp;//Р±СѓРґРµРј РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїСЂРё РїР°СЂСЃРёРЅРіРµ РІС…РѕРґРЅРѕРіРѕ Р±СѓС„РµСЂР° (РєРѕРЅРµС† Р±СѓС„РµСЂР° РЅРµ РѕР·РЅР°С‡Р°РµС‚ РєРѕРЅРµС† СЃС‚СЂРѕРєРё)
 		do {
 			char buf[BUFFER_SIZE] = { 0 };
 			int len = sizeof(buf);
 			recvResult = recv(Socket, buf, len, 0);
 			if (recvResult > 0)
 			{
-				//Поскольку не определено, что такое сообщение
-				//будем считать что сообщение это то, что заканчивается '\0'
+				//РџРѕСЃРєРѕР»СЊРєСѓ РЅРµ РѕРїСЂРµРґРµР»РµРЅРѕ, С‡С‚Рѕ С‚Р°РєРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ
+				//Р±СѓРґРµРј СЃС‡РёС‚Р°С‚СЊ С‡С‚Рѕ СЃРѕРѕР±С‰РµРЅРёРµ СЌС‚Рѕ С‚Рѕ, С‡С‚Рѕ Р·Р°РєР°РЅС‡РёРІР°РµС‚СЃСЏ '\0'
 				std::vector<std::string> BufVect;
 				for (auto &ch : buf)
 				{
@@ -117,9 +117,9 @@ public:
 					}
 				}
 #ifdef _DEBUG
-				std::wcout << L"Количество байт: " << recvResult << "\n";
-				std::wcout << L"Исходный буфер: " << buf << "\n";//на нуле строка обрывается и не выводится
-				std::wcout << L"Парсенный буфер: " << "\n";
+				std::wcout << L"РљРѕР»РёС‡РµСЃС‚РІРѕ Р±Р°Р№С‚: " << recvResult << "\n";
+				std::wcout << L"РСЃС…РѕРґРЅС‹Р№ Р±СѓС„РµСЂ: " << buf << "\n";//РЅР° РЅСѓР»Рµ СЃС‚СЂРѕРєР° РѕР±СЂС‹РІР°РµС‚СЃСЏ Рё РЅРµ РІС‹РІРѕРґРёС‚СЃСЏ
+				std::wcout << L"РџР°СЂСЃРµРЅРЅС‹Р№ Р±СѓС„РµСЂ: " << "\n";
 				for (auto &str : BufVect)
 					std::wcout << str.c_str() << "\n";
 #endif
@@ -138,16 +138,16 @@ public:
 			}
 			else if (recvResult == 0)
 			{
-				std::wcout << L"Прием закончен\n";
+				std::wcout << L"РџСЂРёРµРј Р·Р°РєРѕРЅС‡РµРЅ\n";
 				if (shutdown(Socket, SD_SEND) == SOCKET_ERROR)
 				{
-					std::wcout << L"Отключение не удалось. Код ошибки: " << WSAGetLastError() << "\n";
+					std::wcout << L"РћС‚РєР»СЋС‡РµРЅРёРµ РЅРµ СѓРґР°Р»РѕСЃСЊ. РљРѕРґ РѕС€РёР±РєРё: " << WSAGetLastError() << "\n";
 					closesocket(Socket);
 				}
 			}
 			else 
 			{
-				std::wcout << L"Функчия recv выполнилась с ошибкой: " << WSAGetLastError() << "\n";
+				std::wcout << L"Р¤СѓРЅРєС‡РёСЏ recv РІС‹РїРѕР»РЅРёР»Р°СЃСЊ СЃ РѕС€РёР±РєРѕР№: " << WSAGetLastError() << "\n";
 				closesocket(Socket);
 			}
 		} while (recvResult > 0);
@@ -199,10 +199,10 @@ public:
 			}
 			if (send(Socket, TransferStr.c_str(), TransferStr.size() + 1, 0) == SOCKET_ERROR)
 			{
-				//TODO При отключении приемника никто об этом не знает. Придумать как разбудить поток в этом случае.
-				//Надо чтобы он прервал соединение и не занимал поток из пула.
-				//Пока он просыпается только при поступлении нового сообщения.
-				std::wcout << L"Функция send выполнилась с ошибкой: " << WSAGetLastError() << "\n";
+				//TODO РџСЂРё РѕС‚РєР»СЋС‡РµРЅРёРё РїСЂРёРµРјРЅРёРєР° РЅРёРєС‚Рѕ РѕР± СЌС‚РѕРј РЅРµ Р·РЅР°РµС‚. РџСЂРёРґСѓРјР°С‚СЊ РєР°Рє СЂР°Р·Р±СѓРґРёС‚СЊ РїРѕС‚РѕРє РІ СЌС‚РѕРј СЃР»СѓС‡Р°Рµ.
+				//РќР°РґРѕ С‡С‚РѕР±С‹ РѕРЅ РїСЂРµСЂРІР°Р» СЃРѕРµРґРёРЅРµРЅРёРµ Рё РЅРµ Р·Р°РЅРёРјР°Р» РїРѕС‚РѕРє РёР· РїСѓР»Р°.
+				//РџРѕРєР° РѕРЅ РїСЂРѕСЃС‹РїР°РµС‚СЃСЏ С‚РѕР»СЊРєРѕ РїСЂРё РїРѕСЃС‚СѓРїР»РµРЅРёРё РЅРѕРІРѕРіРѕ СЃРѕРѕР±С‰РµРЅРёСЏ.
+				std::wcout << L"Р¤СѓРЅРєС†РёСЏ send РІС‹РїРѕР»РЅРёР»Р°СЃСЊ СЃ РѕС€РёР±РєРѕР№: " << WSAGetLastError() << "\n";
 				closesocket(Socket);
 				break;
 			}
@@ -234,9 +234,9 @@ void ServerWinAPI::ReceiversTransfer()
 
 void ServerWinAPI::Start()
 {
-	//Здесь мы создадим две пары потока один для отправителя другой для получателя
-	//Будем пользоваться отдельными портами и потоками, поскольку в противном случае
-	//трудно разлечить кто кем является из клиентов
+	//Р—РґРµСЃСЊ РјС‹ СЃРѕР·РґР°РґРёРј РґРІРµ РїР°СЂС‹ РїРѕС‚РѕРєР° РѕРґРёРЅ РґР»СЏ РѕС‚РїСЂР°РІРёС‚РµР»СЏ РґСЂСѓРіРѕР№ РґР»СЏ РїРѕР»СѓС‡Р°С‚РµР»СЏ
+	//Р‘СѓРґРµРј РїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ РѕС‚РґРµР»СЊРЅС‹РјРё РїРѕСЂС‚Р°РјРё Рё РїРѕС‚РѕРєР°РјРё, РїРѕСЃРєРѕР»СЊРєСѓ РІ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ
+	//С‚СЂСѓРґРЅРѕ СЂР°Р·Р»РµС‡РёС‚СЊ РєС‚Рѕ РєРµРј СЏРІР»СЏРµС‚СЃСЏ РёР· РєР»РёРµРЅС‚РѕРІ
 	std::thread SendersAcceptonThread(&ServerWinAPI::Accept, this, std::ref(this->SendersListenSocket));
 	std::thread RecieversAcceptonThread(&ServerWinAPI::Accept, this, std::ref(this->ReceiversListenSocket));
 	std::thread SendersTransferThread(&ServerWinAPI::SendersTransfer, this);
